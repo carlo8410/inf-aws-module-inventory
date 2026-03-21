@@ -30,6 +30,6 @@ output "api_gateway_execution_arn" {
 
 output "api_url" {
   description = "The base URL of the REST API Gateway"
-  value       = "${aws_api_gateway_deployment.mc_inventory_api_deployment.invoke_url}dev"
+  value       = aws_api_gateway_stage.mc_inventory_api_stage_dev.invoke_url
 }
 
