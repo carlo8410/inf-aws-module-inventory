@@ -1,7 +1,27 @@
-# HTTP API Gateway
+# HTTP API Gateway with OpenAPI 3.0
 resource "aws_apigatewayv2_api" "main" {
   name          = "mc-inventory-api"
   protocol_type = "HTTP"
+
+  body = jsonencode({
+    openapi = "3.0.1"
+    info = {
+      title   = "mc-inventory-api"
+      version = "1.0"
+    }
+    paths = {
+      "/products" = {
+        post = {
+          x-amazon-apigateway-integration = {
+            httpMethod           = "POST"
+            payloadFormatVersion = "2.0"
+            type                 = "aws_proxy"
+            uri                  = aws_lambda_function.register_product.invoke_arn
+          }
+        }
+      }
+    }
+  })
 }
 
 # Default Stage with Auto-Deploy
@@ -9,22 +29,6 @@ resource "aws_apigatewayv2_stage" "default" {
   api_id      = aws_apigatewayv2_api.main.id
   name        = "$default"
   auto_deploy = true
-}
-
-# Integration between API Gateway and Lambda
-resource "aws_apigatewayv2_integration" "lambda_integration" {
-  api_id           = aws_apigatewayv2_api.main.id
-  integration_type = "AWS_PROXY"
-
-  integration_uri    = aws_lambda_function.register_product.invoke_arn
-  integration_method = "POST"
-}
-
-# Route for POST /products
-resource "aws_apigatewayv2_route" "register_product_route" {
-  api_id    = aws_apigatewayv2_api.main.id
-  route_key = "POST /products"
-  target    = "integrations/${aws_apigatewayv2_integration.lambda_integration.id}"
 }
 
 # Lambda Permission for API Gateway
