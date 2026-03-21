@@ -1,9 +1,9 @@
 terraform {
   backend "s3" {
-    bucket = "inf-aws-module-inventory-state"
-    key = "dev/terraform.tfstate"
-    region = "us-east-2"
-    encrypt = true
+    bucket       = "inf-aws-module-inventory-state"
+    key          = "dev/terraform.tfstate"
+    region       = "us-east-2"
+    encrypt      = true
     use_lockfile = true
   }
   required_providers {
