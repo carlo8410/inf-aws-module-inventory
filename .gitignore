@@ -13,4 +13,5 @@ crash.*.log
 *.tfplan
 
 # Dependency lock file
+docs/
 
