@@ -13,4 +13,6 @@ crash.*.log
 *.tfplan
 
 # Dependency lock file
-.terraform.lock.hcl
+# Exclude documents folder
+docs/
+
