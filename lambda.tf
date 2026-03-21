@@ -16,7 +16,7 @@ resource "aws_lambda_function" "register_product" {
 }
 
 # Alias pointing to the latest code ($LATEST)
-resource "aws_lambda_alias" "latest" {
+resource "aws_lambda_alias" "register_product_latest" {
   name             = "latest"
   description      = "Alias pointing to the latest code ($LATEST)"
   function_name    = aws_lambda_function.register_product.function_name
@@ -24,7 +24,7 @@ resource "aws_lambda_alias" "latest" {
 }
 
 # Alias pointing to a specific version (V1)
-resource "aws_lambda_alias" "v1" {
+resource "aws_lambda_alias" "register_product_fixed" {
   name             = "v1"
   description      = "Alias for stable version 1"
   function_name    = aws_lambda_function.register_product.function_name
