@@ -25,9 +25,9 @@ resource "aws_lambda_alias" "register_product_latest" {
 
 # Alias pointing to a specific version (V1)
 resource "aws_lambda_alias" "register_product_fixed" {
-  name             = "v1"
+  name             = "fixed"
   description      = "Alias for stable version 1"
   function_name    = aws_lambda_function.register_product.function_name
-  function_version = aws_lambda_function.register_product.version
+  function_version = "1"
 }
 
