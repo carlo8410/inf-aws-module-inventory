@@ -29,5 +29,9 @@ resource "aws_lambda_alias" "register_product_fixed" {
   description      = "Alias for stable version 1"
   function_name    = aws_lambda_function.register_product.function_name
   function_version = "1"
+
+  lifecycle {
+    ignore_changes = [function_version]
+  }
 }
 
