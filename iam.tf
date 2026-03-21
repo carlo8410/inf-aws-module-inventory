@@ -1,6 +1,6 @@
 # IAM Role for Lambda
-resource "aws_iam_role" "lambda_exec" {
-  name = "register-product-lambda-role"
+resource "aws_iam_role" "mc-register-product-lambda" {
+  name = "mc-register-product-lambda-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -17,6 +17,6 @@ resource "aws_iam_role" "lambda_exec" {
 
 # Basic execution policy for Lambda (logging to CloudWatch)
 resource "aws_iam_role_policy_attachment" "lambda_logs" {
-  role       = aws_iam_role.lambda_exec.name
+  role       = aws_iam_role.mc-register-product-lambda.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
