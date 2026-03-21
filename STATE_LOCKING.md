@@ -2,8 +2,13 @@
 
 Este proyecto utiliza la característica de **bloqueo nativo de S3** introducida en Terraform v1.10 para gestionar la concurrencia y evitar que el estado se corrompa.
 
-## ¿Qué es el Bloqueo de Estado (State Locking)?
-Cuando varias personas o procesos (como GitHub Actions) intentan ejecutar `terraform apply` al mismo tiempo, el bloqueo de estado asegura que solo uno pueda realizar cambios a la vez. Esto evita conflictos y la posible pérdida de datos en la infraestructura.
+## ¿Por qué es IMPORTANTE el bloqueo?
+
+Sin un sistema de bloqueo, tu infraestructura corre varios riesgos graves:
+1. **Corrupción del Estado**: Si dos personas (o GitHub Actions) escriben en el archivo `.tfstate` al mismo tiempo, el archivo puede quedar incompleto, rompiendo la base de datos interna de Terraform.
+2. **Conflictos de Recursos**: Dos procesos podrían intentar crear el mismo recurso de AWS (como una base de datos) simultáneamente, lo que genera errores de "ResourceAlreadyExists" o configuraciones duplicadas.
+3. **Inconsistencias en CI/CD**: En equipos grandes, si dos Pull Requests se fusionan muy rápido, el bloqueo asegura que GitHub Actions procese una implementación completa antes de empezar la siguiente.
+
 
 ## Configuración Implementada
 En el archivo `main.tf`, el bloque de backend está configurado así:
