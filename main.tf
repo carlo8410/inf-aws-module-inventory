@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket = "cg-terraform-state-curso"
+    bucket = "inf-aws-module-inventory-state"
     key = "dev/terraform.tfstate"
     region = "us-east-2"
     encrypt = true
