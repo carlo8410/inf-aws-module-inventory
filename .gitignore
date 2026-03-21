@@ -13,6 +13,4 @@ crash.*.log
 *.tfplan
 
 # Dependency lock file
-# Exclude documents folder
-docs/
 
