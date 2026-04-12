@@ -13,6 +13,16 @@ resource "aws_lambda_function" "register_product" {
       ENV = "dev"
     }
   }
+
+  lifecycle {
+    ignore_changes = [
+      source_code_hash,
+      last_modified,
+      filename,
+      s3_key,
+      s3_object_version
+    ]
+  }
 }
 
 # Alias pointing to the latest code ($LATEST)
