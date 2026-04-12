@@ -30,24 +30,3 @@ resource "aws_lambda_permission" "api_gw_mc_inventory_api" {
   source_arn    = "${aws_api_gateway_rest_api.mc_inventory_api.execution_arn}/*/*"
 }
 
-
-# IAM Role for CodeDeploy
-resource "aws_iam_role" "codedeploy" {
-  name = "mc-inventory-codedeploy-role"
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [{
-      Action = "sts:AssumeRole"
-      Effect = "Allow"
-      Principal = {
-        Service = "codedeploy.amazonaws.com"
-      }
-    }]
-  })
-}
-
-resource "aws_iam_role_policy_attachment" "codedeploy_lambda" {
-  role       = aws_iam_role.codedeploy.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSCodeDeployRoleForLambda"
-}
