@@ -61,7 +61,7 @@ resource "aws_cloudwatch_dashboard" "inventory_dashboard" {
         height = 6
         properties = {
           metrics = [
-            [ "AWS/ApiGateway", "Count", "ApiName", aws_api_gateway_rest_api.mc_inventory_api.name, { "stat": "Sum" } ],
+            [ "AWS/ApiGateway", "Count", "ApiId", aws_api_gateway_rest_api.mc_inventory_api.id, { "stat": "Sum" } ],
             [ ".", "5XXError", ".", ".", { "stat": "Sum" } ],
             [ ".", "4XXError", ".", ".", { "stat": "Sum" } ]
           ]
