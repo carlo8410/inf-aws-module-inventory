@@ -26,6 +26,7 @@ resource "aws_lambda_permission" "api_gw_mc_inventory_api" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.register_product.function_name
+  qualifier     = aws_lambda_alias.register_product_fixed.name
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_api_gateway_rest_api.mc_inventory_api.execution_arn}/*/*"
 }
