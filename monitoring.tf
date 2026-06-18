@@ -25,25 +25,39 @@ resource "aws_cloudwatch_dashboard" "inventory_dashboard" {
         type   = "metric"
         x      = 0
         y      = 0
-        width  = 12
+        width  = 8
         height = 6
         properties = {
           metrics = [
-            [ "AWS/Lambda", "Invocations", "FunctionName", aws_lambda_function.register_product.function_name, { "stat": "Sum" } ],
-            [ ".", "Errors", ".", ".", { "stat": "Sum" } ]
+            [ { "expression": "SEARCH('{AWS/Lambda,FunctionName,ExecutedVersion} FunctionName=\"${aws_lambda_function.register_product.function_name}\" MetricName=\"Invocations\"', 'Sum', 60)", "id": "e1" } ]
           ]
-          period  = 60
-          region  = "us-east-2"
-          title   = "Lambda Invocations & Errors"
           view    = "timeSeries"
-          stacked = false
+          region  = "us-east-2"
+          title   = "Lambda Invocations by Version (Canary Traffic Split)"
+          period  = 60
         }
       },
       {
         type   = "metric"
-        x      = 12
+        x      = 8
         y      = 0
-        width  = 12
+        width  = 8
+        height = 6
+        properties = {
+          metrics = [
+            [ { "expression": "SEARCH('{AWS/Lambda,FunctionName,ExecutedVersion} FunctionName=\"${aws_lambda_function.register_product.function_name}\" MetricName=\"Errors\"', 'Sum', 60)", "id": "e2" } ]
+          ]
+          view    = "timeSeries"
+          region  = "us-east-2"
+          title   = "Lambda Errors by Version (Canary Health Check)"
+          period  = 60
+        }
+      },
+      {
+        type   = "metric"
+        x      = 16
+        y      = 0
+        width  = 8
         height = 6
         properties = {
           metrics = [
