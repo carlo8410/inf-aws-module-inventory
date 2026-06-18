@@ -29,7 +29,7 @@ resource "aws_cloudwatch_dashboard" "inventory_dashboard" {
         height = 6
         properties = {
           metrics = [
-            [ { "expression": "SEARCH('{AWS/Lambda,FunctionName,ExecutedVersion} FunctionName=\"${aws_lambda_function.register_product.function_name}\" MetricName=\"Invocations\"', 'Sum', 60)", "id": "e1" } ]
+            [ { "expression": "SEARCH('Namespace=\"AWS/Lambda\" MetricName=\"Invocations\" FunctionName=\"${aws_lambda_function.register_product.function_name}\"', 'Sum', 60)", "id": "e1" } ]
           ]
           view    = "timeSeries"
           region  = "us-east-2"
@@ -45,7 +45,7 @@ resource "aws_cloudwatch_dashboard" "inventory_dashboard" {
         height = 6
         properties = {
           metrics = [
-            [ { "expression": "SEARCH('{AWS/Lambda,FunctionName,ExecutedVersion} FunctionName=\"${aws_lambda_function.register_product.function_name}\" MetricName=\"Errors\"', 'Sum', 60)", "id": "e2" } ]
+            [ { "expression": "SEARCH('Namespace=\"AWS/Lambda\" MetricName=\"Errors\" FunctionName=\"${aws_lambda_function.register_product.function_name}\"', 'Sum', 60)", "id": "e2" } ]
           ]
           view    = "timeSeries"
           region  = "us-east-2"
